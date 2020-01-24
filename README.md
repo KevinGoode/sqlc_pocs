@@ -21,11 +21,15 @@ To test most generated apis run the code as follows.The code tests a number of i
 1. go run ./*.go
 
 ## Conclusion
-The code generated for basic SQL CRUD operations can be used with a SQLLITE3 DB
+The code generated for basic SQL CRUD operations can be used with a SQLLITE3 DB   
+The only overhead is having 2 sets of 'create table' scripts :   
+1.) One that is postgres compatible and used by code generator (appinventory_postgres.sql)   
+2.) One that is sqllite compatible and is used as an extra step in main.go to create the sqllite3 db (appinventory_sqllite.sql)   
+
 
 ## References For SQLC
 
-https://conroy.org/introducing-sqlc
+https://conroy.org/introducing-sqlc   
 https://github.com/kyleconroy/sqlc
 
 ## NOTE
