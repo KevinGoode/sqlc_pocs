@@ -1,0 +1,12 @@
+{
+  "version": "1",
+  "packages": [{
+    "schema": "./schemas",
+    "queries": "./queries",
+    "name": "main",
+    "path": ".",
+    "emit_json_tags": true,
+    "emit_prepared_queries": true,
+    "emit_interface": true
+  }]
+} 
