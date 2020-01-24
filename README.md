@@ -16,8 +16,8 @@ The example contains 3 linked tables and generates a full suite of insert, updat
 ## Generating code
 1. In directory sqlc_poc> /home/{USERNAME}/Downloads/sqlc-devel-linux-amd64/sqlc generate
 
-## Running Basic example
-To test most generated apis run the code as follows.The code tests a number of inserts and a join  on 2 tables
+## Running Basic Example
+To test most generated apis, run the code as follows.The code tests a number of inserts and a join  on 2 tables
 1. go run ./*.go
 
 ## Conclusion
