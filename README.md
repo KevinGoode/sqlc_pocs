@@ -7,8 +7,8 @@ Sqlc code generator uses postgres parser BUT regardless, provided you use standa
 Suggested data types are as follows (TBC): TEXT, VARCHAR, REAL, DOUBLE PRECISION, BOOLEAN, INT, BIGINT.   
 Avoid time and date types (NOT supported by sqllite). Instead, use BIGINT to store a unix time stamp    
 
-This is useful: https://www.w3resource.com/sql/data-type.php   , but if you dig deeper it transpires   
-that some types are supported as alis/synonyms:   
+This article gives a useful comparison of data types: https://www.w3resource.com/sql/data-type.php   , BUT might be not wholely correct.   
+If you dig deeper it transpires that some types are supported as alias/synonyms:   
 https://www.w3resource.com/mysql/mysql-data-types.php   
 https://www.tutorialspoint.com/sqlite/sqlite_data_types.htm   
 
