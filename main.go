@@ -27,7 +27,7 @@ func createDatabase(fileName string) *sql.DB {
 }
 func main() {
 	ctx := context.Background()
-	database := createDatabase("appinventory_sqllite.sql")
+	database := createDatabase("./schemas/appinventory_schema.sql")
 	db_api := New(database)
 	//Create 2 hosts
 	hostParams := CreateHostParams{ID: "host1", Name: sql.NullString{"winhost1", true}, AtlasID: sql.NullString{"atlas1", true}, LastUpdated: sql.NullInt64{1, true}}

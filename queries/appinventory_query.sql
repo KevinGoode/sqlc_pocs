@@ -13,7 +13,7 @@ SELECT name, address FROM hosts INNER JOIN asset_hosts ON hosts.id = asset_hosts
 -- name: CreateHost :exec
 INSERT INTO hosts (id,name,atlas_id,last_updated) VALUES ($1, $2, $3, $4);
 -- name: CreateAsset :exec
-INSERT INTO assets (id,name,last_updated) VALUES ($1, $2, $3);
+INSERT INTO assets (id,name,last_updated, some_real, some_double, some_var_char_255) VALUES ($1, $2, $3, $4, $5, $6);
 -- name: CreateAssetHost :exec
 INSERT INTO asset_hosts (id,host_id, asset_id) VALUES ($1, $2, $3);
 -- name: UpdateHostAddress :exec

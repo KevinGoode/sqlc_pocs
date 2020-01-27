@@ -9,17 +9,27 @@ import (
 )
 
 const createAsset = `-- name: CreateAsset :exec
-INSERT INTO assets (id,name,last_updated) VALUES ($1, $2, $3)
+INSERT INTO assets (id,name,last_updated, some_real, some_double, some_var_char_255) VALUES ($1, $2, $3, $4, $5, $6)
 `
 
 type CreateAssetParams struct {
-	ID          string         `json:"id"`
-	Name        sql.NullString `json:"name"`
-	LastUpdated sql.NullInt64  `json:"last_updated"`
+	ID             string          `json:"id"`
+	Name           sql.NullString  `json:"name"`
+	LastUpdated    sql.NullInt64   `json:"last_updated"`
+	SomeReal       sql.NullFloat64 `json:"some_real"`
+	SomeDouble     sql.NullFloat64 `json:"some_double"`
+	SomeVarChar255 sql.NullString  `json:"some_var_char_255"`
 }
 
 func (q *Queries) CreateAsset(ctx context.Context, arg CreateAssetParams) error {
-	_, err := q.exec(ctx, q.createAssetStmt, createAsset, arg.ID, arg.Name, arg.LastUpdated)
+	_, err := q.exec(ctx, q.createAssetStmt, createAsset,
+		arg.ID,
+		arg.Name,
+		arg.LastUpdated,
+		arg.SomeReal,
+		arg.SomeDouble,
+		arg.SomeVarChar255,
+	)
 	return err
 }
 
@@ -114,7 +124,7 @@ func (q *Queries) GetAllAssetHosts(ctx context.Context) ([]AssetHost, error) {
 }
 
 const getAllAssets = `-- name: GetAllAssets :many
-SELECT id, name, last_updated FROM assets
+SELECT id, name, last_updated, some_real, some_double, some_var_char_255 FROM assets
 `
 
 func (q *Queries) GetAllAssets(ctx context.Context) ([]Asset, error) {
@@ -126,7 +136,14 @@ func (q *Queries) GetAllAssets(ctx context.Context) ([]Asset, error) {
 	var items []Asset
 	for rows.Next() {
 		var i Asset
-		if err := rows.Scan(&i.ID, &i.Name, &i.LastUpdated); err != nil {
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.LastUpdated,
+			&i.SomeReal,
+			&i.SomeDouble,
+			&i.SomeVarChar255,
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
@@ -174,13 +191,20 @@ func (q *Queries) GetAllHosts(ctx context.Context) ([]Host, error) {
 }
 
 const getAsset = `-- name: GetAsset :one
-SELECT id, name, last_updated FROM assets WHERE id = $1 LIMIT 1
+SELECT id, name, last_updated, some_real, some_double, some_var_char_255 FROM assets WHERE id = $1 LIMIT 1
 `
 
 func (q *Queries) GetAsset(ctx context.Context, id string) (Asset, error) {
 	row := q.queryRow(ctx, q.getAssetStmt, getAsset, id)
 	var i Asset
-	err := row.Scan(&i.ID, &i.Name, &i.LastUpdated)
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.LastUpdated,
+		&i.SomeReal,
+		&i.SomeDouble,
+		&i.SomeVarChar255,
+	)
 	return i, err
 }
 

@@ -7,9 +7,12 @@ import (
 )
 
 type Asset struct {
-	ID          string         `json:"id"`
-	Name        sql.NullString `json:"name"`
-	LastUpdated sql.NullInt64  `json:"last_updated"`
+	ID             string          `json:"id"`
+	Name           sql.NullString  `json:"name"`
+	LastUpdated    sql.NullInt64   `json:"last_updated"`
+	SomeReal       sql.NullFloat64 `json:"some_real"`
+	SomeDouble     sql.NullFloat64 `json:"some_double"`
+	SomeVarChar255 sql.NullString  `json:"some_var_char_255"`
 }
 
 type AssetHost struct {
