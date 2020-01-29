@@ -1,12 +1,14 @@
-# SQLC/SQL-MIGRATE GOLANG CODE GEN POC
+# SQLC/SQL-MIGRATE/GO-BINDATA GOLANG CODE GEN POC
 
 This folder contains a poc of using the sqlc golang code generator to interface with a sqllite3 db. 
-It also uses the sql-migrate library to create and migrate versions of the database.  
+It also demonstrates the sql-migrate library to create and migrate versions of the database and the use   
+of go-bindata to generate a go source file containing a directory of sql schema files in binary format.       
+   
 Sqlc code generator uses postgres parser BUT regardless, provided you use standard SQL data types and if you follow STANDARD SQL SYNTAX , there is no reason why sqlc cannot be used to access other sql db types. 
-
+   
 Suggested data types are as follows (TBC): TEXT, VARCHAR, REAL, DOUBLE PRECISION, BOOLEAN, INT, BIGINT.   
 Avoid time and date types (NOT supported by sqllite). Instead, use BIGINT to store a unix time stamp    
-
+   
 This article gives a useful comparison of data types: https://www.w3resource.com/sql/data-type.php, BUT might be not wholely correct.   
 If you dig deeper it transpires that some types are supported as alias/synonyms:   
 https://www.w3resource.com/mysql/mysql-data-types.php   
@@ -22,9 +24,11 @@ Download sqlc code generator https://bin.equinox.io/c/gvM95th6ps1/sqlc-devel-lin
 ## Example
 The example contains 3 linked tables and generates a full suite of insert, update, select and delete commands.
 
-## Generating code
+## Generating code 
 1. In directory sqlc_poc> /home/{USERNAME}/Downloads/sqlc-devel-linux-amd64/sqlc generate
-
+This produces the files: **appinventory_query.sql.go  db.go   models.go  querier.go**   
+2. In directory sqlc_poc> go-bindata -pkg db -o ./db/bindata.go schemas   
+This produces the file **./db/bindata.go.**   
 ## Running Basic Example
 To test most generated apis, run the code as follows.The code tests a number of inserts and a join  on 2 tables
 1. go run ./*.go
@@ -40,14 +44,15 @@ the scripts in order. State of db is maintained by an automatically created db t
 ## References For SQLC and slq-migrate
 
 https://conroy.org/introducing-sqlc   
-https://github.com/kyleconroy/sqlc
-https://github.com/rubenv/sql-migrate
+https://github.com/kyleconroy/sqlc   
+https://github.com/rubenv/sql-migrate   
 https://github.com/shuLhan/go-bindata   
 
 ## NOTE
-The directory of schema files need to be shipped with any executable that uses this code.   
-Best approach is to use a tool such as bindata to create a binary object of the directory   
-and import this with the code (TBC)
+The directory of schema files need to be shipped with any executable that uses this code unless
+a tool such as go-bindata is used. Because the code cannot execute without these files the preferred approach is to compile   
+the go-bindata generated file in with the dbclient  and thereby remove the runtime dependency of shipping the schema files.   
+The code demonstrates both approaches using 'createDatabase' and 'createDatabaseFromBinaryFile'  
 
 ## APPENDIX-  sqlite output
 [goode@localhost sqlc_poc]$ **sqlite3 appinventory.db**   

@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"./db"
 	_ "github.com/mattn/go-sqlite3"
 	migrate "github.com/rubenv/sql-migrate"
 )
@@ -20,9 +21,25 @@ func createDatabase(fileName string) *sql.DB {
 	fmt.Printf("Applied %d migrations!\n", n)
 	return database
 }
+func createDatabaseFromBinaryFiles(fileName string) *sql.DB {
+	database, _ := sql.Open("sqlite3", "./appinventory.db")
+	// Read migrations from binary data: bindata.go
+	migrations := &migrate.AssetMigrationSource{
+		Asset:    db.Asset,
+		AssetDir: db.AssetDir,
+		Dir:      "schemas",
+	}
+	n, err := migrate.Exec(database, "sqlite3", migrations, migrate.Up)
+	if err != nil {
+		// Handle errors!
+	}
+	fmt.Printf("Applied %d migrations!\n", n)
+	return database
+}
 func main() {
 	ctx := context.Background()
-	database := createDatabase("./schemas/appinventory_schema.sql")
+	//database := createDatabase("./schemas/appinventory_schema.sql")
+	database := createDatabaseFromBinaryFiles("./schemas/appinventory_schema.sql")
 	db_api := New(database)
 	//Create 2 hosts
 	hostParams := CreateHostParams{ID: "host1", Name: sql.NullString{"winhost1", true}, AtlasID: sql.NullString{"atlas1", true}, LastUpdated: sql.NullInt64{1, true}}
