@@ -33,7 +33,8 @@ This produces the files: **appinventory_query.sql.go  db.go   models.go  querier
 This produces the file **./db/bindata.go.**   
 ## Running Basic Example
 To test most generated apis, run the code as follows.The code tests a number of inserts and a join  on 2 tables
-1. go run ./*.go
+1. go build
+2. ./sqlc_poc   
 
 ## Conclusion
 The code generated for basic SQL CRUD operations can be used with a SQLLITE3 DB.   
