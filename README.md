@@ -16,7 +16,7 @@ https://www.tutorialspoint.com/sqlite/sqlite_data_types.htm
 Install go lang   
 Install sqllite3   
 go get github.com/mattn/go-sqlite3   
-go get -v github.com/rubenv/sql-migrate/...
+go get -v github.com/rubenv/sql-migrate/...   
 Download sqlc code generator https://bin.equinox.io/c/gvM95th6ps1/sqlc-devel-linux-amd64.tgz   
 
 ## Example
@@ -34,7 +34,7 @@ The code generated for basic SQL CRUD operations can be used with a SQLLITE3 DB.
 Need to test with MySQL. Should work with postgres. Note how the database is created using sql-migrate   
 in the function 'createDatabase'.As the db is extended release by release, scripts in numerical order   
 are added to schema directory and the migrate library will automatically upgrade any db it finds by applying   
-the scripts in order. State of db is maintained by an automatically created db table: (See below) 
+the scripts in order. State of db is maintained by an automatically created db table:**gorp_migrations** (See below) 
 
 
 ## References For SQLC and slq-migrate
