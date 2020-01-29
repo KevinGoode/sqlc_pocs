@@ -10,6 +10,7 @@ Suggested data types are as follows (TBC): TEXT, VARCHAR, REAL, DOUBLE PRECISION
 Avoid time and date types (NOT supported by sqllite). Instead, use BIGINT to store a unix time stamp    
    
 This article gives a useful comparison of data types: https://www.w3resource.com/sql/data-type.php, BUT might be not wholely correct.   
+   
 If you dig deeper it transpires that some types are supported as alias/synonyms:   
 https://www.w3resource.com/mysql/mysql-data-types.php   
 https://www.tutorialspoint.com/sqlite/sqlite_data_types.htm   
@@ -19,13 +20,14 @@ Install go lang
 Install sqllite3   
 go get github.com/mattn/go-sqlite3   
 go get -v github.com/rubenv/sql-migrate/...   
+go get -u github.com/shuLhan/go-bindata/...   
 Download sqlc code generator https://bin.equinox.io/c/gvM95th6ps1/sqlc-devel-linux-amd64.tgz   
 
 ## Example
 The example contains 3 linked tables and generates a full suite of insert, update, select and delete commands.
 
 ## Generating code 
-1. In directory sqlc_poc> /home/{USERNAME}/Downloads/sqlc-devel-linux-amd64/sqlc generate
+1. In directory sqlc_poc> /home/{USERNAME}/Downloads/sqlc-devel-linux-amd64/sqlc generate   
 This produces the files: **appinventory_query.sql.go  db.go   models.go  querier.go**   
 2. In directory sqlc_poc> go-bindata -pkg db -o ./db/bindata.go schemas   
 This produces the file **./db/bindata.go.**   
