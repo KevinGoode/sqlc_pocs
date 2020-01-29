@@ -1,28 +1,23 @@
 package main
 
 import (
-	"bufio"
 	"context"
 	"database/sql"
 	"fmt"
-	"os"
 
 	_ "github.com/mattn/go-sqlite3"
+	migrate "github.com/rubenv/sql-migrate"
 )
 
 func createDatabase(fileName string) *sql.DB {
 	database, _ := sql.Open("sqlite3", "./appinventory.db")
-	file, e := os.Open(fileName)
-	r := bufio.NewReader(file)
-	s, _, e := r.ReadLine()
-	for e == nil {
-		create_command := string(s)
-		statement, _ := database.Prepare(create_command)
-		statement.Exec()
-		s, _, e = r.ReadLine()
-		statement.Close()
+	// Read migrations from a folder:
+	migrations := &migrate.FileMigrationSource{Dir: "./schemas"}
+	n, err := migrate.Exec(database, "sqlite3", migrations, migrate.Up)
+	if err != nil {
+		// Handle errors!
 	}
-	file.Close()
+	fmt.Printf("Applied %d migrations!\n", n)
 	return database
 }
 func main() {
