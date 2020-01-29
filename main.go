@@ -21,7 +21,7 @@ func createDatabase(fileName string) *sql.DB {
 	fmt.Printf("Applied %d migrations!\n", n)
 	return database
 }
-func createDatabaseFromBinaryFiles(fileName string) *sql.DB {
+func createDatabaseFromBinaryFile(fileName string) *sql.DB {
 	database, _ := sql.Open("sqlite3", "./appinventory.db")
 	// Read migrations from binary data: bindata.go
 	migrations := &migrate.AssetMigrationSource{
@@ -39,7 +39,7 @@ func createDatabaseFromBinaryFiles(fileName string) *sql.DB {
 func main() {
 	ctx := context.Background()
 	//database := createDatabase("./schemas/appinventory_schema.sql")
-	database := createDatabaseFromBinaryFiles("./schemas/appinventory_schema.sql")
+	database := createDatabaseFromBinaryFile("./schemas/appinventory_schema.sql")
 	db_api := New(database)
 	//Create 2 hosts
 	hostParams := CreateHostParams{ID: "host1", Name: sql.NullString{"winhost1", true}, AtlasID: sql.NullString{"atlas1", true}, LastUpdated: sql.NullInt64{1, true}}
