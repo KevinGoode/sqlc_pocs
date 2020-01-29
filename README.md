@@ -47,7 +47,7 @@ https://github.com/shuLhan/go-bindata
 ## NOTE
 The directory of schema files need to be shipped with any executable that uses this code.   
 Best approach is to use a tool such as bindata to create a binary object of the directory   
-and import this with the code (TYC)
+and import this with the code (TBC)
 
 ## APPENDIX-  sqlite output
 [goode@localhost sqlc_poc]$ **sqlite3 appinventory.db**   
